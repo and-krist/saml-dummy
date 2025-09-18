@@ -7,7 +7,6 @@ const defaultWa = `wsignin1.0`
 const defaultWctx = `rm=0&id=ctl00%24contentHolder%24C002%24confirmWindowUser%24C%24wifPatientSignIn`
 export default function Home() {
 
-  // Ref object
   const formRef = useRef<HTMLFormElement | null>(null);
   const [callback, setCallback] = useState(defaultCallbackUrl);
   const [token, setToken] = useState(defaultSaml);
@@ -126,76 +125,4 @@ export default function Home() {
       </div>
     </div>
   </div>
-
-  return <div>
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form method="POST"
-              className="space-y-6"
-              ref={formRef}
-              onSubmit={e => {
-                e.preventDefault()
-
-                if (!formRef.current) return
-
-                formRef.current.action = callback
-                formRef.current.submit()
-              }}>
-          <div>
-            <label htmlFor="callback" className="block text-sm/6 font-medium text-gray-100">
-              Callback url
-            </label>
-            <div className="mt-2">
-              <input
-                value={callback}
-                onChange={e => {
-                  setCallback((e.currentTarget.value))
-                }}
-                id="callback"
-                name="callback"
-                type="text"
-                required
-                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="wresult" className="block text-sm/6 font-medium text-gray-100">
-                Saml
-              </label>
-            </div>
-            <div className="mt-2">
-              <textarea
-                name={"wresult"}
-                value={token}
-                onChange={e => {
-                  setToken((e.currentTarget.value))
-                }}
-                id="wresult"
-                required
-                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-              />
-            </div>
-            <input readOnly type="text" value="wsignin1.0" name={"wa"}/>
-            <input readOnly type="text"
-                   value="rm=0&id=ctl00%24contentHolder%24C002%24confirmWindowUser%24C%24wifPatientSignIn"
-                   name={"wctx"}/>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              Auth
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
 }
